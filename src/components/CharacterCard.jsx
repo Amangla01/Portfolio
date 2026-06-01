@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
+import tux from '../assets/tux.png'
 
 const BARS = [
-  { label: 'HP',      val: 100, max: 100, color: '#39ff14' },
-  { label: 'XP',      val: 84,  max: 100, color: '#ffd700', note: '8400 / 10000' },
-  { label: 'STAMINA', val: 100, max: 100, color: '#f0f',    note: '∞' },
+  { label: 'HP',      val: 100, color: '#39ff14' },
+  { label: 'XP',      val: 84,  color: '#ffd700', note: '8400 / 10000' },
+  { label: 'STAMINA', val: 100, color: '#f0f',    note: '∞' },
 ]
 
 const STATS = [
@@ -33,9 +34,7 @@ function AnimatedBar({ color, pct, delay = 0 }) {
   const ref = useRef(null)
   useEffect(() => {
     if (!ref.current) return
-    const t = setTimeout(() => {
-      ref.current.style.width = pct + '%'
-    }, 100 + delay)
+    const t = setTimeout(() => { ref.current.style.width = pct + '%' }, 100 + delay)
     return () => clearTimeout(t)
   }, [pct, delay])
 
@@ -49,32 +48,49 @@ function AnimatedBar({ color, pct, delay = 0 }) {
   )
 }
 
-export default function CharacterCard() {
+export default function CharacterCard({ isMobile }) {
   return (
     <aside>
       <div className="panel" style={{ animationDelay: '0.05s' }}>
         <div className="panel-header">PLAYER CARD</div>
 
         <div style={{
-          width: 72, height: 72,
-          border: '2px solid var(--pixel)',
-          margin: '0 auto 1rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-pixel)', fontSize: 28, color: 'var(--pixel)',
-          background: 'var(--panel2)',
-          animation: 'pulse-border 3s ease-in-out infinite',
-        }}>A</div>
-
-        <div style={{ fontFamily: 'var(--font-pixel)', fontSize: 9, color: 'var(--gold)', textAlign: 'center', letterSpacing: 2, marginBottom: 4 }}>AMAN MANGLA</div>
-        <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginBottom: '0.75rem' }}>Web Developer</div>
-
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-          background: 'rgba(255,215,0,0.07)', border: '1px solid rgba(255,215,0,0.25)',
-          padding: '4px 10px', marginBottom: '1.25rem',
-          fontFamily: 'var(--font-pixel)', fontSize: 7, color: 'var(--gold)',
+          display: 'flex',
+          flexDirection: isMobile ? 'row' : 'column',
+          alignItems: isMobile ? 'center' : 'stretch',
+          gap: isMobile ? '1rem' : 0,
+          marginBottom: '1rem',
         }}>
-          ★ LVL 12 — WEB EXPLORER
+          {/* AVATAR */}
+          <div style={{
+            width: 64, height: 64, flexShrink: 0,
+            border: '2px solid var(--pixel)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'var(--panel2)',
+            animation: 'pulse-border 3s ease-in-out infinite',
+            margin: isMobile ? 0 : '0 auto 0.75rem',
+            overflow: 'hidden',
+            borderRadius: 2,
+          }}>
+            <img
+              src={tux}
+              alt="Tux the Linux penguin"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: 'var(--font-pixel)', fontSize: 9, color: 'var(--gold)', textAlign: isMobile ? 'left' : 'center', letterSpacing: 2, marginBottom: 4 }}>AMAN MANGLA</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: isMobile ? 'left' : 'center', marginBottom: '0.5rem' }}>Web Developer</div>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              background: 'rgba(255,215,0,0.07)', border: '1px solid rgba(255,215,0,0.25)',
+              padding: '3px 8px',
+              fontFamily: 'var(--font-pixel)', fontSize: 6, color: 'var(--gold)',
+            }}>
+              ★ LVL 12 — WEB EXPLORER
+            </div>
+          </div>
         </div>
 
         {BARS.map(({ label, val, color, note }, i) => (
@@ -87,19 +103,22 @@ export default function CharacterCard() {
           </div>
         ))}
 
-        <div className="panel-header" style={{ marginTop: '1.25rem' }}>ATTRIBUTES</div>
-
-        {STATS.map(({ icon, name, dots, type }) => (
-          <div key={name} style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '0.5rem 0', borderBottom: '1px solid rgba(26,58,92,0.45)', fontSize: 12,
-          }}>
-            <span style={{ color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>{icon}</span>{name}
-            </span>
-            <StatDots count={5} filled={dots} type={type} />
-          </div>
-        ))}
+        {!isMobile && (
+          <>
+            <div className="panel-header" style={{ marginTop: '1.25rem' }}>ATTRIBUTES</div>
+            {STATS.map(({ icon, name, dots, type }) => (
+              <div key={name} style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '0.5rem 0', borderBottom: '1px solid rgba(26,58,92,0.45)', fontSize: 12,
+              }}>
+                <span style={{ color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>{icon}</span>{name}
+                </span>
+                <StatDots count={5} filled={dots} type={type} />
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </aside>
   )

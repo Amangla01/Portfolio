@@ -35,7 +35,7 @@ const PROJECTS = [
     icon: '▶',
     title: 'YOUTUBE CLONE',
     desc: 'Frontend clone of YouTube. UI replication exercise — video cards, sidebar, search bar.',
-    tags: [{ name: 'HTML', type: 'gold' }, { name: 'CSS', type: '' }],
+    tags: [{ name: 'HTML', type: 'gold' }, { name: 'CSS', type: '' }, { name: 'JavaScript', type: 'green' }],
     locked: false,
     github: 'https://github.com/Amangla01/Youtube-clone',
   },
@@ -43,7 +43,7 @@ const PROJECTS = [
     icon: '💼',
     title: 'JOB FREAK CLONE',
     desc: 'Clone of a job listing platform. Layout and component replication for frontend practice.',
-    tags: [{ name: 'HTML', type: 'gold' }, { name: 'CSS', type: '' }],
+    tags: [{ name: 'HTML', type: 'gold' }, { name: 'CSS', type: '' }, { name: 'JavaScript', type: 'green' }],
     locked: false,
     github: 'https://github.com/Amangla01/Job-Freak-Clone',
   },
@@ -57,14 +57,16 @@ const PROJECTS = [
   },
 ]
 
-export default function Quests() {
+export default function Quests({ isMobile }) {
   return (
     <div className="panel" style={{ animationDelay: '0.1s' }}>
       <div className="panel-header">COMPLETED QUESTS</div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '1rem' }}>
-        {PROJECTS.map((p, i) => (
-          <QuestCard key={i} {...p} />
-        ))}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(210px, 1fr))',
+        gap: '1rem',
+      }}>
+        {PROJECTS.map((p, i) => <QuestCard key={i} {...p} />)}
       </div>
     </div>
   )

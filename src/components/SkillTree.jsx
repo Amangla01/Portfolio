@@ -20,8 +20,8 @@ const TOOLS = [
   { name: 'Metamask', type: 'green' },
   { name: 'Hardhat', type: '' },
   { name: 'Linux', type: 'gold' },
-  { name: 'Claude.ai', type: '' },
   { name: '{JS}', type: '' },
+  { name: 'Claude.ai', type: '' },
 ]
 
 function SkillBar({ name, pct, delay }) {
@@ -50,18 +50,23 @@ function SkillBar({ name, pct, delay }) {
   )
 }
 
-export default function SkillTree() {
-  const half = Math.ceil(SKILLS.length / 2)
-  const left = SKILLS.slice(0, half)
-  const right = SKILLS.slice(half)
-
+export default function SkillTree({ isMobile }) {
   return (
     <div className="panel" style={{ animationDelay: '0.1s' }}>
       <div className="panel-header">SKILL TREE</div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 2.5rem' }}>
-        <div>{left.map((s, i) => <SkillBar key={s.name} {...s} delay={i * 80} />)}</div>
-        <div>{right.map((s, i) => <SkillBar key={s.name} {...s} delay={i * 80 + 40} />)}</div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? 0 : '0 2.5rem',
+      }}>
+        {isMobile
+          ? SKILLS.map((s, i) => <SkillBar key={s.name} {...s} delay={i * 60} />)
+          : <>
+              <div>{SKILLS.slice(0, 4).map((s, i) => <SkillBar key={s.name} {...s} delay={i * 80} />)}</div>
+              <div>{SKILLS.slice(4).map((s, i) => <SkillBar key={s.name} {...s} delay={i * 80 + 40} />)}</div>
+            </>
+        }
       </div>
 
       <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
