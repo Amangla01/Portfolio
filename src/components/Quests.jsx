@@ -13,7 +13,7 @@ const PROJECTS = [
     desc: 'Focus timer built on the Pomodoro technique. Work sessions, breaks, and session tracking.',
     tags: [{ name: 'JavaScript', type: 'gold' }, { name: 'React', type: '' }, { name: 'CSS', type: 'green' }],
     locked: false,
-    github: 'https://github.com/Amangla01/Pomodoro-Timer',
+    github: 'https://pomodoro-timer.amangla.xyz/',
   },
   {
     icon: '📖',
