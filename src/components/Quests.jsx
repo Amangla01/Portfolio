@@ -5,7 +5,7 @@ const PROJECTS = [
     desc: 'Search any song and get a 30-second preview with full track info. Pulls live data from a music API.',
     tags: [{ name: 'JavaScript', type: 'gold' }, { name: 'React', type: '' }, { name: 'Music API', type: 'green' }],
     locked: false,
-    github: 'https://github.com/Amangla01/music-preview',
+    github: 'https://music.amangla.xyz/',
   },
   {
     icon: '⏱',
