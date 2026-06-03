@@ -21,7 +21,7 @@ const PROJECTS = [
     desc: 'Full-stack real-time collaborative writing app. Room-code sessions, live sync, MVC backend.',
     tags: [{ name: 'React', type: 'gold' }, { name: 'Socket.io', type: '' }, { name: 'MongoDB', type: 'green' }, { name: 'Express', type: '' }],
     locked: false,
-    github: 'https://github.com/Amangla01/Collab-story-builder',
+    github: 'https://collab-story-builder.amangla.xyz/',
   },
   {
     icon: '⌨',
